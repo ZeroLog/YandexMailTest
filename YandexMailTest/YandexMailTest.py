@@ -1,7 +1,8 @@
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 # settings
 log = "login"
 passw = "pass"
@@ -61,15 +62,29 @@ def send_mail():
         to_file("Test 2 passed")
     except:
         to_file("Test 2 failed")
+        
+        
+#Creating a folder
 
-
-
+def creating_folder():
+    to_file("Test 3 start")
+    driver.find_element(By.CSS_SELECTOR, '.Button2.Button2_view_clear.Button2_size_xs.qa-LeftColumn-AddFolderButton.AddItemButton-m__root--19X88').click()
+    time.sleep(1)
+    driver.find_element(By.CLASS_NAME, "nb-input").send_keys("test")
+    driver.find_element(By.CSS_SELECTOR, '.b-popup__confirm .nb-button._nb-small-button._init.ns-action[data-dialog-action="dialog.submit"]').click()
+    time.sleep(3)
+    folder_xpath ='//span[text()="test"]/ancestor::div[contains(@class, "qa-LeftColumn-FolderNodeContent")]'
+    try:
+        folder_element = driver.find_element(By.XPATH, folder_xpath)
+        to_file("Test 3 passed")
+    except:
+        to_file("Test 3 failed")
 
 
 
 
 login()
-
 send_mail()
+creating_folder()
 
 driver.quit()
