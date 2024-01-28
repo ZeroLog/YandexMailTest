@@ -3,6 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select
+
 # settings
 log = "login"
 passw = "pass"
@@ -79,11 +81,44 @@ def creating_folder():
         to_file("Test 3 passed")
     except:
         to_file("Test 3 failed")
+        
+#Creating a test button
+
+def mov_letter():
+     
+     to_file("Test 4 start")
+     email_xpath = f'//span[@title="test"]'
+     time.sleep(3)
+     driver.find_element(By.XPATH, email_xpath).click()
+     time.sleep(2)
+     driver.find_element(By.CLASS_NAME, 'ns-view-toolbar-button-toolbar-settings').click()
+     time.sleep(3)
+     driver.find_element(By.CLASS_NAME, "js-toolbar-settings-button-infolder").click()
+     time.sleep(2)
+     select_element = driver.find_element(By.NAME, "folder")
+     time.sleep(2)
+     select = Select(select_element)
+     select.select_by_visible_text("test")
+     time.sleep(1)
+     driver.find_element(By.CSS_SELECTOR, 'button[data-click-action="toolbar.settings.submitButtonOptions"]').click()
+     time.sleep(1)
+     driver.find_element(By.CLASS_NAME, "nb-button._nb-action-button._init.js-clickable.js-toolbar-settings-control.js-toolbar-settings-apply.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only").click()
+     time.sleep(2)
+     driver.refresh()
+     time.sleep(3)
+     try:
+        test_element = driver.find_elements(By.XPATH, '//div[@class="mail-Toolbar-Popup-Item" and text()="test"]')
+        to_file("Test 4 passed")
+
+     except:
+        to_file("Test 4 failed")
 
 
+     
 
 
 login()
+mov_letter()
 send_mail()
 creating_folder()
 
